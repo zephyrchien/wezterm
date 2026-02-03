@@ -1,9 +1,8 @@
-[target.x86_64-pc-windows-gnu]
-linker = "x86_64-w64-mingw32-gcc"
-ar = "x86_64-w64-mingw32-gcc-ar"
+[target."cfg(all())"]
+rustflags = [
+  "-C", "target-cpu=native",
+  "-C", "linker=clang",
+  "-C", "link-arg=-fuse-ld=mold",
+  "-Z", "threads=8"
+]
 
-# We need openssl to be statically linked on windows to avoid madness,
-# and openssl-src does that based on the crt-static feature being
-# enabled for the target, so let's turn that on here.
-[target.x86_64-pc-windows-msvc]
-rustflags = ["-C", "target-feature=+crt-static"]
